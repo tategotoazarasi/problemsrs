@@ -1,5 +1,6 @@
 // src/leetcode.rs
 
+use std::cmp::min;
 use std::collections::HashMap;
 
 /// Struct to hold LeetCode solutions, mimicking the namespace style in C++.
@@ -48,9 +49,94 @@ impl Solution {
     }
 }
 
+pub struct Solution2976;
+
+impl Solution2976 {
+    pub fn minimum_cost(
+        source: String,
+        target: String,
+        original: Vec<char>,
+        changed: Vec<char>,
+        cost: Vec<i32>,
+    ) -> i64 {
+        let mut min_cost: [[i64; 26]; 26] = [[i64::MAX / 2 - 1; 26]; 26];
+        for i in 0..original.len() {
+            min_cost[original[i] as usize - 'a' as usize][changed[i] as usize - 'a' as usize] = min(
+                min_cost[original[i] as usize - 'a' as usize][changed[i] as usize - 'a' as usize],
+                cost[i] as i64,
+            );
+        }
+        for i in 0..26 {
+            min_cost[i][i] = 0;
+        }
+        for j in 'a'..='z' {
+            for i in 'a'..='z' {
+                for k in 'a'..='z' {
+                    min_cost[i as usize - 'a' as usize][k as usize - 'a' as usize] = min(
+                        min_cost[i as usize - 'a' as usize][k as usize - 'a' as usize],
+                        min_cost[i as usize - 'a' as usize][j as usize - 'a' as usize]
+                            + min_cost[j as usize - 'a' as usize][k as usize - 'a' as usize],
+                    );
+                }
+            }
+        }
+        let mut ans: i64 = 0;
+        let s_bytes = source.as_bytes();
+        let t_bytes = target.as_bytes();
+        for i in 0..s_bytes.len() {
+            let s = s_bytes[i];
+            let t = t_bytes[i];
+            if s == t {
+                continue;
+            }
+            if min_cost[s as usize - 'a' as usize][t as usize - 'a' as usize] == i64::MAX / 2 - 1 {
+                return -1;
+            }
+            ans += min_cost[s as usize - 'a' as usize][t as usize - 'a' as usize];
+        }
+        ans
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_minimum_cost_case1() {
+        let result = Solution2976::minimum_cost(
+            "abcd".parse().unwrap(),
+            "acbe".parse().unwrap(),
+            vec!['a', 'b', 'c', 'c', 'e', 'd'],
+            vec!['b', 'c', 'b', 'e', 'b', 'e'],
+            vec![2, 5, 5, 1, 2, 20],
+        );
+        assert_eq!(result, 28);
+    }
+
+    #[test]
+    fn test_minimum_cost_case2() {
+        let result = Solution2976::minimum_cost(
+            "aaaa".parse().unwrap(),
+            "bbbb".parse().unwrap(),
+            vec!['a', 'c'],
+            vec!['c', 'b'],
+            vec![1, 2],
+        );
+        assert_eq!(result, 12);
+    }
+
+    #[test]
+    fn test_minimum_cost_case3() {
+        let result = Solution2976::minimum_cost(
+            "abcd".parse().unwrap(),
+            "abce".parse().unwrap(),
+            vec!['a'],
+            vec!['e'],
+            vec![10000],
+        );
+        assert_eq!(result, -1);
+    }
 
     #[test]
     fn test_two_sum_case1() {
