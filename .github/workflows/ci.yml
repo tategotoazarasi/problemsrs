@@ -13,6 +13,8 @@ jobs:
   build-and-test:
     name: Build and Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -63,7 +65,7 @@ jobs:
       - name: Create index.html redirect
         # This creates a redirect so visiting the root page goes to the lib docs
         run: |
-          echo '<meta http-equiv="refresh" content="0;url=problems_rs/index.html">' > target/doc/index.html
+          echo '<meta http-equiv="refresh" content="0;url=problemsrs/index.html">' > target/doc/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
