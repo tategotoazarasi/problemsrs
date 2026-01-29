@@ -66,8 +66,8 @@ impl Solution2976 {
                 cost[i] as i64,
             );
         }
-        for i in 0..26 {
-            min_cost[i][i] = 0;
+        for (i, row) in min_cost.iter_mut().enumerate() {
+            row[i] = 0;
         }
         for j in 'a'..='z' {
             for i in 'a'..='z' {
