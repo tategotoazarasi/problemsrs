@@ -1,9 +1,9 @@
 (function() {
-    var implementors = Object.fromEntries([["problemsrs",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.92.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"problemsrs/leetcode/struct.Solution.html\" title=\"struct problemsrs::leetcode::Solution\">Solution</a>",1,["problemsrs::leetcode::Solution"]]]]]);
+    var implementors = Object.fromEntries([["problemsrs",[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.93.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"problemsrs/leetcode/struct.Solution.html\" title=\"struct problemsrs::leetcode::Solution\">Solution</a>",1,["problemsrs::leetcode::Solution"]],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.93.0/core/panic/unwind_safe/trait.UnwindSafe.html\" title=\"trait core::panic::unwind_safe::UnwindSafe\">UnwindSafe</a> for <a class=\"struct\" href=\"problemsrs/leetcode/struct.Solution2976.html\" title=\"struct problemsrs::leetcode::Solution2976\">Solution2976</a>",1,["problemsrs::leetcode::Solution2976"]]]]]);
     if (window.register_implementors) {
         window.register_implementors(implementors);
     } else {
         window.pending_implementors = implementors;
     }
 })()
-//{"start":57,"fragment_lengths":[371]}
+//{"start":57,"fragment_lengths":[742]}
