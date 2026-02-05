@@ -98,9 +98,38 @@ impl Solution2976 {
     }
 }
 
+pub struct Solution3379;
+
+impl Solution3379 {
+    pub fn construct_transformed_array(nums: Vec<i32>) -> Vec<i32> {
+        let mut ans = nums.clone();
+        for i in 0..nums.len() {
+            let mut j = i as i32 + nums[i];
+            while j < 0 {
+                j += nums.len() as i32
+            }
+            j %= nums.len() as i32;
+            ans[i] = nums[j as usize];
+        }
+        ans
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_construct_transformed_array_case1() {
+        let result = Solution3379::construct_transformed_array(vec![3, -2, 1, 1]);
+        assert_eq!(result, vec![1, 1, 1, 3]);
+    }
+
+    #[test]
+    fn test_construct_transformed_array_case2() {
+        let result = Solution3379::construct_transformed_array(vec![-1, 4, -1]);
+        assert_eq!(result, vec![-1, -1, 4]);
+    }
 
     #[test]
     fn test_minimum_cost_case1() {
