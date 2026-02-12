@@ -1,7 +1,7 @@
 // src/leetcode.rs
 
 use std::cmp::min;
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 
 /// Struct to hold LeetCode solutions, mimicking the namespace style in C++.
 pub struct Solution;
@@ -115,9 +115,67 @@ impl Solution3379 {
     }
 }
 
+pub struct Solution3713;
+
+impl Solution3713 {
+    pub fn longest_balanced(s: String) -> i32 {
+        let mut cnt: [usize; 26] = [0; 26];
+        let mut ans = 0;
+        let chars: Vec<usize> = s
+            .as_bytes()
+            .iter()
+            .map(|&c| c as usize - 'a' as usize)
+            .collect();
+        if chars.len() <= 1 {
+            return 1;
+        }
+        for i in 0..chars.len() - 1 {
+            let mut set: BTreeSet<(usize, usize)> = BTreeSet::new();
+            cnt.fill(0);
+            cnt[chars[i]] = 1;
+            set.insert((1, chars[i]));
+            for j in i + 1..chars.len() {
+                set.remove(&(cnt[chars[j]], chars[j]));
+                cnt[chars[j]] += 1;
+                set.insert((cnt[chars[j]], chars[j]));
+                let (cnt_first, _) = set.first().unwrap();
+                let (cnt_last, _) = set.last().unwrap();
+                if cnt_first == cnt_last {
+                    ans = ans.max((j - i + 1) as i32);
+                }
+            }
+        }
+        ans
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn longest_balanced_case1() {
+        let result = Solution3713::longest_balanced("abbac".parse().unwrap());
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn longest_balanced_case2() {
+        let result = Solution3713::longest_balanced("zzabccy".parse().unwrap());
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn longest_balanced_case3() {
+        let result = Solution3713::longest_balanced("aba".parse().unwrap());
+        assert_eq!(result, 2);
+    }
+
+    #[test]
+    fn longest_balanced_case4() {
+        let result = Solution3713::longest_balanced("f".parse().unwrap());
+        assert_eq!(result, 1);
+    }
 
     #[test]
     fn test_construct_transformed_array_case1() {
