@@ -149,9 +149,48 @@ impl Solution3713 {
     }
 }
 
+pub struct Solution761;
+
+impl Solution761 {
+    pub fn count_prime_set_bits(left: i32, right: i32) -> i32 {
+        let mut is_prime = [false; 33];
+        is_prime[2] = true;
+        is_prime[3] = true;
+        is_prime[5] = true;
+        is_prime[7] = true;
+        is_prime[11] = true;
+        is_prime[13] = true;
+        is_prime[17] = true;
+        is_prime[19] = true;
+        is_prime[23] = true;
+        is_prime[29] = true;
+        is_prime[31] = true;
+        let mut ans = 0;
+        for i in left..=right {
+            let co = i.count_ones();
+            if is_prime[co as usize] {
+                ans += 1;
+            }
+        }
+        ans
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn special_binary_string_case1() {
+        let result = Solution761::count_prime_set_bits(6, 10);
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    fn special_binary_string_case2() {
+        let result = Solution761::count_prime_set_bits(10, 15);
+        assert_eq!(result, 5);
+    }
 
     #[test]
     fn longest_balanced_case1() {
